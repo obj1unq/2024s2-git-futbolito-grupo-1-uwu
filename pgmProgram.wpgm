@@ -14,7 +14,8 @@ program futbolito{
 	//Pizarron
 	keyboard.i().onPressDo({lionel.inicio()})
 	keyboard.b().onPressDo({lionel.buscarla()})
-	
+	//Estudiantes
+	keyboard.c().onPressDo({lionel.alternarCamiseta()})
 
 	game.start()
 

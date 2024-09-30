@@ -8,4 +8,26 @@ describe "futbolito" {
         lionel.inicio()
         assert.equals(inicio, lionel.position())
     }
+
+    test "lionel no esta en el borde izquierdo y no puede alternar su camiseta,
+          pero al moverse al borde izquierdo ahora si puede" {
+
+        assert.equals(game.at(3,5), lionel.position())
+
+        assert.throwsException({lionel.alternarCamiseta()})
+
+        //lionel va al borde izquierdo y ahora si puede alternar su camiseta
+        lionel.position(game.at(0,0))
+
+        assert.equals("lionel-titular.png", lionel.image())
+
+        lionel.alternarCamiseta()
+
+        assert.equals("lionel-suplente.png", lionel.image())
+
+        lionel.alternarCamiseta()
+
+        assert.equals("lionel-titular.png", lionel.image())
+
+    }
 }
