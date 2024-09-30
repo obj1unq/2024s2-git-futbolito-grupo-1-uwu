@@ -4,8 +4,19 @@ import pgmProgram.*
 describe "futbolito" {
     test "inicio" {
         const inicio = game.at(0,5)
-        assert.notEquals(inicio, lionel.position())
-        lionel.inicio()
-        assert.equals(inicio, lionel.position())
+        assert.notEquals(inicio, pelota.position())
+        pelota.inicio()
+        assert.equals(inicio, pelota.position())
+    }
+
+    test "levantarla" {
+        const inicio = game.at(0,5)
+        const sube = game.at(0,6)
+        pelota.inicio()
+        assert.equals(inicio,pelota.position())
+        lionel.subirla(1)
+        assert.equals(sube,pelota.position())
+        lionel.bajarla(1)
+        assert.equals(inicio,pelota.position())
     }
 }
