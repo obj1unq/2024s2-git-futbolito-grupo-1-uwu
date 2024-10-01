@@ -14,10 +14,11 @@ program futbolito{
 	//Pizarron
 	keyboard.i().onPressDo({pelota.inicio()})
 	keyboard.b().onPressDo({lionel.buscarla()})
+	keyboard.p().onPressDo({lionel.patear()})
 	//Clase
 	keyboard.l().onPressDo({lionel.levantarla()})
 
 	game.start()
-
+ 
 
 }

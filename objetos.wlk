@@ -1,6 +1,6 @@
 /** First Wollok example */
 import wollok.game.*
-
+import pgmProgram.*
 object lionel {
 	
 	var property position = game.at(3,5)
@@ -27,17 +27,22 @@ object lionel {
 		position = pelota.position()
 	}
 
-	method levantarla(){
-		//**Levantarla** Hacer que la pelota suba por (eje y) 1 posición, y luego de 2 segundos baje nuevamente a dónde estaba. Tip: Usar un scheduler. Validar que la pelota se encuentre en la misma posicion que Lionel.
-		self.validarIgualPosicion()
-		self.subirla(1)
-		game.schedule(2000, {self.bajarla(1)})
+	method patear() {
+		self.validarPosicion()
+		pelota.avanzar(3)
 	}
 
-	method validarIgualPosicion(){
-		if (not (self.position() == pelota.position())){
-			self.error("No estoy en la pelota")
-		}
+	method validarPosicion() {
+	  if(position != pelota.position()) {
+		self.error("No estoy sobre la pelota")
+	  }
+	}
+
+	method levantarla(){
+		//**Levantarla** Hacer que la pelota suba por (eje y) 1 posición, y luego de 2 segundos baje nuevamente a dónde estaba. Tip: Usar un scheduler. Validar que la pelota se encuentre en la misma posicion que Lionel.
+		self.validarPosicion()
+		self.subirla(1)
+		game.schedule(2000, {self.bajarla(1)})
 	}
 
 	method subirla(num){
@@ -48,12 +53,16 @@ object lionel {
 		pelota.bajar(1)
 	}
 
-}
+} 
 
 
 object pelota {
 	const property image="pelota.png"
 	var property position = game.at(5,5)	
+
+	method avanzar(cantidad) {
+	   position = game.at((game.width() - 1).min(position.x() + cantidad), 5)
+	}
 
 	method inicio() {
 		//al apretar la tecla *i* la pelota se debe quedar en el origen borde izquierdo (0,5)
