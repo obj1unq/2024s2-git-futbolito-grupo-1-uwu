@@ -1,6 +1,6 @@
 /** First Wollok example */
 import wollok.game.*
-
+import pgmProgram.*
 object lionel {
 	
 	var property position = game.at(3,5)
@@ -26,10 +26,25 @@ object lionel {
 		//al apretar la tecla *b* lionel se mueve a donde está la pelota
 		position = pelota.position()
 	}
-}
+
+	method patear() {
+		self.validarPosicion()
+		pelota.avanzar(3)
+	}
+
+	method validarPosicion() {
+	  if(position != pelota.position()) {
+		self.error("No estoy sobre la pelota")
+	  }
+	}
+} 
 
 
 object pelota {
 	const property image="pelota.png"
 	var property position = game.at(5,5)	
+
+	method avanzar(cantidad) {
+	   position = game.at((game.width() - 1).min(position.x() + cantidad), 5)
+	}
 }

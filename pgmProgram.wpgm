@@ -14,9 +14,10 @@ program futbolito{
 	//Pizarron
 	keyboard.i().onPressDo({lionel.inicio()})
 	keyboard.b().onPressDo({lionel.buscarla()})
+	keyboard.p().onPressDo({lionel.patear()})
 	
 
 	game.start()
-
+ 
 
 }
