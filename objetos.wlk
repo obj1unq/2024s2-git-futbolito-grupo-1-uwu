@@ -53,6 +53,24 @@ object lionel {
 		pelota.bajar(1)
 	}
 
+	method taquito() {
+		keyboard.t().onPressDo({self.patearTaquito()})
+	}
+	method patearTaquito() {
+		self.validarLionelYPelotaJuntos()
+		pelota.retroceder()
+	}
+
+	method validarLionelYPelotaJuntos() {
+		if (not self.hayColision()) {
+			self.error("Lionel no está con la pelota")
+		}
+	}
+
+	method hayColision() {
+      const colisiones = game.colliders(self)
+      return not(colisiones.isEmpty())
+    }
 } 
 
 
@@ -75,5 +93,9 @@ object pelota {
 
 	method bajar(num){
 		position = game.at(position.x(), position.y() - num)
+	}
+
+	method retroceder() {
+		position = game.at((position.x() - 2).max(0), position.y())
 	}
 }

@@ -6,6 +6,7 @@ describe "futbolito" {
 	    game.width(15)
 	    game.height(10)
     }
+    
     test "inicio" {
         const inicio = game.at(0,5)
         assert.notEquals(inicio, pelota.position())
@@ -39,5 +40,22 @@ describe "futbolito" {
 
         lionel.patear()
         assert.equals(game.at(game.width() - 1, 5), pelota.position())
+    }
+    test "taquito" {
+        game.addVisual(lionel)
+	    game.addVisual(pelota)
+	    game.cellSize(40)
+	    game.width(15)
+	    game.height(10)
+
+
+        lionel.buscarla()
+
+        assert.that(lionel.hayColision())
+
+        lionel.patearTaquito()
+
+        assert.equals(game.at(3,5), pelota.position())
+        assert.notThat(lionel.hayColision())
     }
 } 
