@@ -1,0 +1,83 @@
+import objetos.*
+import pgmProgram.*
+
+describe "futbolito" {
+    method initialize() {
+	    game.width(15)
+	    game.height(10)
+    }
+    
+    test "inicio" {
+        const inicio = game.at(0,5)
+        assert.notEquals(inicio, pelota.position())
+        pelota.inicio()
+        assert.equals(inicio, pelota.position())
+    }
+
+    test "levantarla" {
+        const inicio = game.at(0,5)
+        const sube = game.at(0,6)
+        pelota.inicio()
+        assert.equals(inicio,pelota.position())
+        lionel.subirla(1)
+        assert.equals(sube,pelota.position())
+        lionel.bajarla(1)
+        assert.equals(inicio,pelota.position())
+    }
+
+    test "patear" {
+        assert.notEquals(pelota.position(), lionel.position())
+
+        lionel.buscarla()
+        assert.equals(pelota.position(), lionel.position())
+
+        lionel.patear()
+        assert.equals(game.at(8, 5), pelota.position())
+
+        lionel.position(game.at(game.width() - 1, 5))
+        pelota.position(lionel.position())
+        assert.equals(pelota.position(), lionel.position())
+
+        lionel.patear()
+        assert.equals(game.at(game.width() - 1, 5), pelota.position())
+    }
+    test "taquito" {
+        game.addVisual(lionel)
+	    game.addVisual(pelota)
+	    game.cellSize(40)
+	    game.width(15)
+	    game.height(10)
+
+
+        lionel.buscarla()
+
+        assert.that(lionel.hayColision())
+
+        lionel.patearTaquito()
+
+        assert.equals(game.at(3,5), pelota.position())
+        assert.notThat(lionel.hayColision())
+    }
+
+    test "lionel no esta en el borde izquierdo y no puede alternar su camiseta,
+          pero al moverse al borde izquierdo ahora si puede" {
+
+        assert.equals(game.at(3,5), lionel.position())
+
+        assert.throwsException({lionel.alternarCamiseta()})
+
+        //lionel va al borde izquierdo y ahora si puede alternar su camiseta
+        lionel.position(game.at(0,0))
+
+        assert.equals("lionel-titular.png", lionel.image())
+
+        lionel.alternarCamiseta()
+
+        assert.equals("lionel-suplente.png", lionel.image())
+
+        lionel.alternarCamiseta()
+
+        assert.equals("lionel-titular.png", lionel.image())
+
+    }
+} 
